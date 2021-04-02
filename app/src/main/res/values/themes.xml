@@ -24,4 +24,13 @@
     <style name="text.name.detail">
         <item name="android:textSize">25dp</item>
     </style>
+
+    <style name="Theme.GithubUsers.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.GithubUsers.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.GithubUsers.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
