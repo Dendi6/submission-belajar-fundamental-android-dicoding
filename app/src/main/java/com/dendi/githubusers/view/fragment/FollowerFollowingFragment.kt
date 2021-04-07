@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,13 +25,12 @@ class FollowerFollowingFragment : Fragment() {
         private const val USERNAME = "section_username"
 
         @JvmStatic
-        fun newInstance(index: Int, username:String) =
-                FollowerFollowingFragment().apply {
-                    arguments = Bundle().apply {
-                        putInt(ARG_SECTION_NUMBER, index)
-                        putString(USERNAME, username)
-                    }
-                }
+        fun newInstance(index: Int, username: String) = FollowerFollowingFragment().apply {
+            arguments = Bundle().apply {
+                putInt(ARG_SECTION_NUMBER, index)
+                putString(USERNAME, username)
+            }
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -43,42 +43,48 @@ class FollowerFollowingFragment : Fragment() {
         adapter = UsersAdapter()
         adapter.notifyDataSetChanged()
 
-        val tvUsers : RecyclerView = view.findViewById(R.id.tvUsers)
+        val tvUsers: RecyclerView = view.findViewById(R.id.tvUsers)
         tvUsers.layoutManager = LinearLayoutManager(this.context)
         tvUsers.adapter = adapter
 
-        val index = arguments?.getInt(ARG_SECTION_NUMBER,0)
+        val index = arguments?.getInt(ARG_SECTION_NUMBER, 0)
         val username = arguments?.getString(USERNAME)
 
-        if (index == 0){
-            showFollowers(username.toString())
+        val empty: ImageView = view.findViewById(R.id.empty)
+
+        if (index == 0) {
+            showFollowers(username.toString(),empty)
         } else {
-            showFollowing(username.toString())
+            showFollowing(username.toString(),empty)
         }
     }
 
     @SuppressLint("FragmentLiveDataObserve")
-    private fun showFollowers(username:String){
+    private fun showFollowers(username: String,imageView: ImageView) {
         getFollowersModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(FollowersViewModel::class.java)
         getFollowersModel.setData(username)
-        getFollowersModel.getData().observe(this,
-                { listUsers ->
-                    if (listUsers != null) {
-                        adapter.setData(listUsers)
-                    }
-                })
+        getFollowersModel.getData().observe(this, { listUsers ->
+            if (listUsers != null) {
+                adapter.setData(listUsers)
+                imageView.visibility = View.GONE
+            } else {
+                imageView.visibility = View.VISIBLE
+            }
+        })
     }
 
     @SuppressLint("FragmentLiveDataObserve")
-    private fun showFollowing(username: String){
+    private fun showFollowing(username: String,imageView: ImageView) {
         getFollowingModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(FollowingViewModel::class.java)
         getFollowingModel.setData(username)
-        getFollowingModel.getData().observe(this,
-                { listUsers ->
-                    if (listUsers != null) {
-                        adapter.setData(listUsers)
-                    }
-                })
+        getFollowingModel.getData().observe(this, { listUsers ->
+            if (listUsers != null) {
+                adapter.setData(listUsers)
+                imageView.visibility = View.GONE
+            } else {
+                imageView.visibility = View.VISIBLE
+            }
+        })
     }
 
 }

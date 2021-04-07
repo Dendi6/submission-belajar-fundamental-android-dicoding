@@ -10,23 +10,23 @@ import com.loopj.android.http.AsyncHttpResponseHandler
 import cz.msebera.android.httpclient.Header
 import org.json.JSONArray
 
-class FollowingViewModel: ViewModel() {
+class FollowingViewModel : ViewModel() {
     val followingModels = MutableLiveData<ArrayList<User>>()
 
-    fun setData(username:String){
+    fun setData(username: String) {
         val listItem = ArrayList<User>()
 
         val client = AsyncHttpClient()
-        client.addHeader("Authorization", "token 19476a21e81d3a900099a629dd5054d51d493b19")
+        client.addHeader("Authorization", "token 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")
         client.addHeader("User-Agent", "request")
         val url = "https://api.github.com/users/$username/following"
 
         client.get(url, object : AsyncHttpResponseHandler() {
             override fun onSuccess(statusCode: Int, headers: Array<out Header>, responseBody: ByteArray) {
-                try{
+                try {
                     val result = String(responseBody)
                     val jsonArray = JSONArray(result)
-                    Log.d("resonse", jsonArray.toString())
+                    Log.d("response", jsonArray.toString())
                     for (i in 0 until jsonArray.length()) {
                         val jsonObject = jsonArray.getJSONObject(i)
                         val user = User()
@@ -38,7 +38,7 @@ class FollowingViewModel: ViewModel() {
 
                     followingModels.postValue(listItem)
                 } catch (e: Exception) {
-                    Log.d("Exception",e.message.toString())
+                    Log.d("Exception", e.message.toString())
                 }
             }
 
@@ -49,11 +49,12 @@ class FollowingViewModel: ViewModel() {
                     404 -> "$statusCode : Not Found"
                     else -> "$statusCode : ${error.message}"
                 }
-                Log.d("error",errorMessage)
+                Log.d("error", errorMessage)
             }
 
         })
     }
+
     fun getData(): LiveData<ArrayList<User>> {
         return followingModels
     }

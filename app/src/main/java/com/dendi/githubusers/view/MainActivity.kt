@@ -19,10 +19,9 @@ import com.dendi.githubusers.viewModel.AllUsersViewModel
 import com.dendi.githubusers.viewModel.SearchUserViewModel
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: UsersAdapter
-    private lateinit var getUsersModel: AllUsersViewModel
+    private lateinit var getAllUsersModel: AllUsersViewModel
     private lateinit var searchUserModel :SearchUserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,9 +77,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showAllDataUsers(){
-        getUsersModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(AllUsersViewModel::class.java)
-        getUsersModel.setAllUsers()
-        getUsersModel.getAllUsers().observe(this,{listUsers ->
+        getAllUsersModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(AllUsersViewModel::class.java)
+        getAllUsersModel.setAllUsers()
+        getAllUsersModel.getAllUsers().observe(this,{listUsers ->
             if (listUsers != null) {
                 adapter.setData(listUsers)
                 showLoading(false)
@@ -113,7 +112,6 @@ class MainActivity : AppCompatActivity() {
 
                 return true
             }
-
             override fun onQueryTextChange(newText: String): Boolean {
                 if(newText.isEmpty()){
                     showAllDataUsers()

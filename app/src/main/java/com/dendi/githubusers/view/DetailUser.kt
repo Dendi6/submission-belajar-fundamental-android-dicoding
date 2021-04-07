@@ -7,19 +7,19 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.dendi.githubusers.R
 import com.dendi.githubusers.adapter.SectionsPagerAdapter
 import com.dendi.githubusers.databinding.ActivityDetailUserBinding
+import com.dendi.githubusers.model.User
+import com.dendi.githubusers.viewModel.UserViewModel
 import com.google.android.material.tabs.TabLayoutMediator
-import com.loopj.android.http.AsyncHttpClient
-import com.loopj.android.http.AsyncHttpResponseHandler
-import cz.msebera.android.httpclient.Header
-import org.json.JSONObject
 
 class DetailUser : AppCompatActivity() {
     private lateinit var binding: ActivityDetailUserBinding
+    private lateinit var getUserModel : UserViewModel
 
     companion object{
         const val EXTRA_DATA = "extra_data"
@@ -41,12 +41,12 @@ class DetailUser : AppCompatActivity() {
         setContentView(binding.root)
 
         val userName = intent.getStringExtra(EXTRA_DATA)
-
         val actionbar = supportActionBar
         actionbar!!.title = userName.toString()
         actionbar.setDisplayHomeAsUpEnabled(true)
 
-        getUser(userName.toString())
+        showLoading(true)
+        showDataUser(userName.toString())
 
         val sectionsPagerAdapter = SectionsPagerAdapter(this)
         val viewPager = binding.viewPager
@@ -59,70 +59,46 @@ class DetailUser : AppCompatActivity() {
         sectionsPagerAdapter.username = userName.toString()
     }
 
-    @SuppressLint("StringFormatMatches")
-    private fun view(avatar:String, username: String, name:String, location:String, company:String, repo:Int, followers:Int, following:Int){
-        Glide.with(this)
-                .load(avatar)
-                .apply(RequestOptions().override(150,150))
-                .into(binding.imgPhoto)
-        binding.tvName.text = name
-        binding.tvUsername.text = username
-        binding.tvLocation.text = location
-        binding.tvCompany.text = company
-
-        val text = resources.getString(R.string.user_sum,followers,following,repo)
-        binding.tvDetailSum.text = text
+    private fun showLoading(state: Boolean) {
+        if (state) {
+            binding.progressBar.visibility = View.VISIBLE
+            binding.imgPhoto.visibility = View.GONE
+            binding.imgLocation.visibility = View.GONE
+            binding.imgCompany.visibility = View.GONE
+        } else {
+            binding.progressBar.visibility = View.GONE
+            binding.imgPhoto.visibility = View.VISIBLE
+            binding.imgLocation.visibility = View.VISIBLE
+            binding.imgCompany.visibility = View.VISIBLE
+        }
     }
 
-    private fun getUser(username:String){
-        binding.progressBar.visibility = View.VISIBLE
-        binding.imgPhoto.visibility = View.INVISIBLE
-        binding.imgLocation.visibility = View.INVISIBLE
-        binding.imgCompany.visibility = View.INVISIBLE
-
-        val client = AsyncHttpClient()
-        client.addHeader("Authorization", "token 19476a21e81d3a900099a629dd5054d51d493b19")
-        client.addHeader("User-Agent", "request")
-        val url = "https://api.github.com/users/${username}"
-
-        client.get(url, object : AsyncHttpResponseHandler() {
-            override fun onSuccess(statusCode: Int, headers: Array<Header>, responseBody: ByteArray) {
-                binding.progressBar.visibility = View.INVISIBLE
-                binding.imgPhoto.visibility = View.VISIBLE
-                binding.imgLocation.visibility = View.VISIBLE
-                binding.imgCompany.visibility = View.VISIBLE
-
-                val result = String(responseBody)
-                Log.d("TAG", result)
-                try {
-                    val jsonObject = JSONObject(result)
-                    val avatar: String = jsonObject.getString("avatar_url").toString()
-                    val userName: String = jsonObject.getString("login").toString()
-                    val name: String = jsonObject.getString("name").toString()
-                    val location:String = jsonObject.getString("location").toString()
-                    val company:String = jsonObject.getString("company").toString()
-                    val repository:Int = jsonObject.getInt("public_repos")
-                    val followers:Int = jsonObject.getInt("followers")
-                    val following:Int = jsonObject.getInt("following")
-
-                    view(avatar,userName,name,location,company,repository,followers,following)
-                } catch (e: Exception) {
-                    Log.d("Exception",e.message.toString())
-                }
-            }
-
-            override fun onFailure(statusCode: Int, headers: Array<Header>, responseBody: ByteArray, error: Throwable ) {
-                binding.progressBar.visibility = View.INVISIBLE
-
-                val errorMessage = when (statusCode) {
-                    401 -> "$statusCode : Bad Request"
-                    403 -> "$statusCode : Forbidden"
-                    404 -> "$statusCode : Not Found"
-                    else -> "$statusCode : ${error.message + " DETAIL"}"
-                }
-                Log.d("error",errorMessage)
-                Toast.makeText(this@DetailUser, errorMessage, Toast.LENGTH_SHORT).show()
+    private fun showDataUser(username:String){
+        getUserModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(UserViewModel::class.java)
+        getUserModel.setUser(username)
+        getUserModel.getUser().observe(this,{userData ->
+            if (userData != null) {
+                Log.d("tag",userData[0].toString())
+                view(userData[0])
+                showLoading(false)
             }
         })
+    }
+
+    private fun view( user : User){
+        Glide.with(this)
+                .load(user.photo)
+                .apply(RequestOptions().override(150,150))
+                .into(binding.imgPhoto)
+        binding.tvName.text = user.name
+        binding.tvUsername.text = user.userName
+        binding.tvLocation.text = user.location
+        binding.tvCompany.text = user.company
+
+        val followers = user.followers
+        val following = user.following
+        val repo = user.repository
+        val text = resources.getString(R.string.user_sum,followers,following,repo)
+        binding.tvDetailSum.text = text
     }
 }
