@@ -16,7 +16,7 @@ class SearchUserViewModel: ViewModel() {
     fun setSearchUsers(username:String){
         val listItem = ArrayList<User>()
         val client = AsyncHttpClient()
-        client.addHeader("Authorization", "token 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")
+        client.addHeader("Authorization", "token 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")
         client.addHeader("User-Agent","request")
         val url = "https://api.github.com/search/users?q=${username}"
         client.get(url, object : AsyncHttpResponseHandler() {

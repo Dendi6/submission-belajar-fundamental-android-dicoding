@@ -1,11 +1,11 @@
 package com.dendi.githubusers.view
 
-import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -41,22 +41,51 @@ class DetailUser : AppCompatActivity() {
         setContentView(binding.root)
 
         val userName = intent.getStringExtra(EXTRA_DATA)
-        val actionbar = supportActionBar
-        actionbar!!.title = userName.toString()
-        actionbar.setDisplayHomeAsUpEnabled(true)
 
         showLoading(true)
         showDataUser(userName.toString())
+        tabLayout(userName.toString())
 
+        supportActionBar?.elevation = 0f
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun setActionBarTitle(title: String) {
+        if (supportActionBar != null) {
+            this.title = title
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.detail_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        setMode(item.itemId)
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun setMode(selectedMode: Int) {
+        when (selectedMode) {
+            R.id.forFavorite -> {
+                Log.d("item","favorite diklik")
+            }
+            R.id.share -> {
+                Log.d("item","share diklik")
+            }
+        }
+    }
+
+    private fun tabLayout(userName: String) {
         val sectionsPagerAdapter = SectionsPagerAdapter(this)
         val viewPager = binding.viewPager
         viewPager.adapter = sectionsPagerAdapter
-        val tabs= binding.tabs
+        val tabs = binding.tabs
         TabLayoutMediator(tabs, viewPager) { tab, position ->
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
-        supportActionBar?.elevation = 0f
-        sectionsPagerAdapter.username = userName.toString()
+        sectionsPagerAdapter.username = userName
     }
 
     private fun showLoading(state: Boolean) {
@@ -86,6 +115,7 @@ class DetailUser : AppCompatActivity() {
     }
 
     private fun view( user : User){
+        user.name?.let { setActionBarTitle(it) }
         Glide.with(this)
                 .load(user.photo)
                 .apply(RequestOptions().override(150,150))

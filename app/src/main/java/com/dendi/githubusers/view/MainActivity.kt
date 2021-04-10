@@ -41,11 +41,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_change_settings) {
-            val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
-            startActivity(mIntent)
-        }
+        setMode(item.itemId)
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun setMode(selectedMode: Int) {
+        when (selectedMode) {
+            R.id.favorite -> {
+                val intent = Intent(this, FavoriteActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.setting -> {
+                val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+                startActivity(mIntent)
+            }
+        }
     }
 
     private fun showLoading(state: Boolean) {
@@ -71,6 +81,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun userDataSelected(user: User) {
+        val data = User(user.photo,user.userName)
         val intent = Intent(this@MainActivity, DetailUser::class.java)
         intent.putExtra(DetailUser.EXTRA_DATA, user.userName)
         this@MainActivity.startActivity(intent)
