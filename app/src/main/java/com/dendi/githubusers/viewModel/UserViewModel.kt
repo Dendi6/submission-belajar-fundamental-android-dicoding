@@ -30,6 +30,7 @@ class UserViewModel: ViewModel() {
                     val result = String(responseBody)
                     val jsonObject = JSONObject(result)
                     val user = User()
+                    user.id = jsonObject.getInt("id")
                     user.photo = jsonObject.getString("avatar_url")
                     user.userName = jsonObject.getString("login")
                     user.name = jsonObject.getString("name")

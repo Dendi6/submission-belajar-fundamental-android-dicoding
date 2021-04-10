@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun userDataSelected(user: User) {
-        val data = User(user.photo,user.userName)
+        val data = User(user.id ,user.photo,user.userName)
         val intent = Intent(this@MainActivity, DetailUser::class.java)
         intent.putExtra(DetailUser.EXTRA_DATA, data)
         this@MainActivity.startActivity(intent)
