@@ -13,6 +13,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.dendi.githubusers.R
 import com.dendi.githubusers.adapter.SectionsPagerAdapter
 import com.dendi.githubusers.databinding.ActivityDetailUserBinding
+import com.dendi.githubusers.db.UserHelper
 import com.dendi.githubusers.model.User
 import com.dendi.githubusers.viewModel.UserViewModel
 import com.google.android.material.tabs.TabLayoutMediator
@@ -20,6 +21,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 class DetailUser : AppCompatActivity() {
     private lateinit var binding: ActivityDetailUserBinding
     private lateinit var getUserModel : UserViewModel
+    private lateinit var userHelper : UserHelper
 
     companion object{
         const val EXTRA_DATA = "extra_data"
@@ -40,11 +42,14 @@ class DetailUser : AppCompatActivity() {
         binding = ActivityDetailUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val userName = intent.getStringExtra(EXTRA_DATA)
+        val person = intent.getParcelableExtra<User>(EXTRA_DATA) as User
+
+        userHelper = UserHelper.getInstance(applicationContext)
+        userHelper.open()
 
         showLoading(true)
-        showDataUser(userName.toString())
-        tabLayout(userName.toString())
+        showDataUser(person.userName.toString())
+        tabLayout(person.userName.toString())
 
         supportActionBar?.elevation = 0f
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -107,7 +112,6 @@ class DetailUser : AppCompatActivity() {
         getUserModel.setUser(username)
         getUserModel.getUser().observe(this,{userData ->
             if (userData != null) {
-                Log.d("tag",userData[0].toString())
                 view(userData[0])
                 showLoading(false)
             }

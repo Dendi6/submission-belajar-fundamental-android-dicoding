@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.dendi.githubusers.BuildConfig
 import com.dendi.githubusers.model.User
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
@@ -16,7 +17,8 @@ class SearchUserViewModel: ViewModel() {
     fun setSearchUsers(username:String){
         val listItem = ArrayList<User>()
         val client = AsyncHttpClient()
-        client.addHeader("Authorization", "token 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")
+        val key = BuildConfig.GITHUB_TOKEN
+        client.addHeader("Authorization", "token $key")
         client.addHeader("User-Agent","request")
         val url = "https://api.github.com/search/users?q=${username}"
         client.get(url, object : AsyncHttpResponseHandler() {
