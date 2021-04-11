@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import com.dendi.githubusers.db.DatabaseUser.UserColumns.Companion.TABLE_NAME
+import com.dendi.githubusers.db.DatabaseUser.UserColumns.Companion.USERNAME
 import com.dendi.githubusers.db.DatabaseUser.UserColumns.Companion._ID
 
 class UserHelper(context: Context) {
@@ -52,7 +53,7 @@ class UserHelper(context: Context) {
         return database.query(
                 DATABASE_TABLE,
                 null,
-                "$_ID = ?",
+                "$USERNAME = ?",
                 arrayOf(id),
                 null,
                 null,
@@ -64,11 +65,7 @@ class UserHelper(context: Context) {
         return database.insert(DATABASE_TABLE, null, values)
     }
 
-    fun update(id: String, values: ContentValues?): Int {
-        return database.update(DATABASE_TABLE, values, "$_ID = ?", arrayOf(id))
-    }
-
-    fun deleteById(id: String): Int {
-        return database.delete(DATABASE_TABLE, "$_ID = '$id'", null)
+    fun deleteById(username: String): Int {
+        return database.delete(DATABASE_TABLE, "$USERNAME = '$username'", null)
     }
 }

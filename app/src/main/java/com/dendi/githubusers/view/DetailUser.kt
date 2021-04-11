@@ -32,9 +32,7 @@ class DetailUser : AppCompatActivity() {
 
     companion object{
         const val EXTRA_DATA = "extra_data"
-        const val EXTRA_NOTE = "extra_note"
-        const val EXTRA_POSITION = "extra_position"
-        const val REQUEST_ADD = 100
+        const val REQUEST_UPDATE = 200
         const val RESULT_ADD = 101
         @StringRes
         private val TAB_TITLES = intArrayOf(
@@ -58,10 +56,20 @@ class DetailUser : AppCompatActivity() {
         userHelper = UserHelper.getInstance(applicationContext)
         userHelper.open()
 
+        val result = userHelper.queryById(person.userName.toString())
+        if(result.count == 0){
+            isFavorite = true
+        }else {
+            user = User()
+        }
+
+        Log.d("count",result.count.toString())
+        Log.d("isFav",isFavorite.toString())
+
         showLoading(true)
         showDataUser(person.userName.toString())
         tabLayout(person.userName.toString())
-
+        
         supportActionBar?.elevation = 0f
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -84,27 +92,6 @@ class DetailUser : AppCompatActivity() {
 
     private fun setMode(selectedMode: Int) {
         when (selectedMode) {
-            R.id.forFavorite -> {
-                Log.d("item","favorite diklik")
-
-                val person = intent.getParcelableExtra<User>(EXTRA_DATA) as User
-
-                val intent = Intent()
-                intent.putExtra(EXTRA_NOTE, user)
-                intent.putExtra(EXTRA_POSITION, position)
-
-                val values = ContentValues()
-                values.put(DatabaseUser.UserColumns.PHOTO, person.photo)
-                values.put(DatabaseUser.UserColumns.USERNAME, person.userName)
-                val result = userHelper.insert(values)
-                if (result > 0) {
-                    user?.id = result.toInt()
-                    setResult(RESULT_ADD, intent)
-                    finish()
-                } else {
-                    Toast.makeText(this@DetailUser, "Gagal menambah data", Toast.LENGTH_SHORT).show()
-                }
-            }
             R.id.share -> {
                 Log.d("item","share diklik")
             }
@@ -128,11 +115,13 @@ class DetailUser : AppCompatActivity() {
             binding.imgPhoto.visibility = View.GONE
             binding.imgLocation.visibility = View.GONE
             binding.imgCompany.visibility = View.GONE
+            binding.favBotton.visibility = View.GONE
         } else {
             binding.progressBar.visibility = View.GONE
             binding.imgPhoto.visibility = View.VISIBLE
             binding.imgLocation.visibility = View.VISIBLE
             binding.imgCompany.visibility = View.VISIBLE
+            binding.favBotton.visibility = View.VISIBLE
         }
     }
 
@@ -142,9 +131,43 @@ class DetailUser : AppCompatActivity() {
         getUserModel.getUser().observe(this,{userData ->
             if (userData != null) {
                 view(userData[0])
+                favoriteButton(isFavorite)
                 showLoading(false)
             }
         })
+    }
+
+    private fun favoriteButton(checked:Boolean){
+        val toggle = binding.favBotton
+        val person = intent.getParcelableExtra<User>(EXTRA_DATA) as User
+        toggle.isChecked = checked
+        toggle.setOnCheckedChangeListener { _, item ->
+            if ( item ) {
+                // Telah Melakukan Favorite
+                deleteDb(person)
+            } else {
+                // Belum melakukan favorite
+                insertDb(person)
+            }
+        }
+    }
+
+    private fun insertDb(user:User){
+        val intent = Intent()
+        val values = ContentValues()
+        values.put(DatabaseUser.UserColumns.PHOTO, user.photo)
+        values.put(DatabaseUser.UserColumns.USERNAME, user.userName)
+        val result = userHelper.insert(values)
+        if (result > 0) {
+            user.id = result.toInt()
+            setResult(RESULT_ADD, intent)
+        } else {
+            Toast.makeText(this@DetailUser, "Gagal menambah data", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun deleteDb(user:User){
+        userHelper.deleteById(user.userName.toString())
     }
 
     private fun view( user : User){

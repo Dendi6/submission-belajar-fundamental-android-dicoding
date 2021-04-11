@@ -15,7 +15,7 @@ android {
         versionCode 1
         versionName "3.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "GITHUB_TOKEN", '"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"')
+        buildConfigField("String", "GITHUB_TOKEN", '"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"')
     }
     buildTypes {
         release {

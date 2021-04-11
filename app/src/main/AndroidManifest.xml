@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GithubUsers"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.FavoriteActivity"></activity>
+        <activity android:name=".view.FavoriteActivity" />
         <activity
             android:name=".view.SplashScreen"
             android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">

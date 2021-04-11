@@ -25,7 +25,7 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UserViewHolder>() {
     }
 
     inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val binding = ItemUserListBinding.bind(itemView)
+        private val binding = ItemUserListBinding.bind(itemView)
         fun bind(users: User) {
             with(itemView){
                 binding.txtName.text = users.userName

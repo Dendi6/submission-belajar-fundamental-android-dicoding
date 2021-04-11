@@ -71,7 +71,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDetailSum"
+        app:layout_constraintTop_toBottomOf="@+id/favBotton"
         app:srcCompat="@drawable/ic_baseline_location_on_24"
         app:tint="@color/grey"
         android:contentDescription="@string/location" />
@@ -85,7 +85,7 @@
         android:textColor="@color/grey"
         tools:text="@string/location"
         app:layout_constraintStart_toEndOf="@+id/imgLocation"
-        app:layout_constraintTop_toBottomOf="@+id/tvDetailSum" />
+        app:layout_constraintTop_toBottomOf="@+id/favBotton" />
 
     <ImageView
         android:id="@+id/imgCompany"
@@ -109,6 +109,15 @@
         tools:text="@string/userCompany"
         app:layout_constraintStart_toEndOf="@+id/imgCompany"
         app:layout_constraintTop_toBottomOf="@+id/tvLocation" />
+
+    <ToggleButton
+        android:id="@+id/favBotton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/favorite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDetailSum" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
