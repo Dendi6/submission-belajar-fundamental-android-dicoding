@@ -3,7 +3,6 @@ package com.dendi.githubusers.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -52,8 +51,8 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             R.id.setting -> {
-                val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
-                startActivity(mIntent)
+                val intent = Intent(this, SettingActivity::class.java)
+                startActivity(intent)
             }
         }
     }

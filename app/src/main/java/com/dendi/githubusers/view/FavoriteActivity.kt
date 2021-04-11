@@ -77,7 +77,8 @@ class FavoriteActivity : AppCompatActivity() {
             } else {
                 adapter.dataUsers = ArrayList()
                 binding.emptyView.visibility = View.VISIBLE
-                showSnackbarMessage("Tidak ada data saat ini")
+                val text = getString(R.string.no_data)
+                showSnackbarMessage(text)
             }
             noteHelper.close()
         }

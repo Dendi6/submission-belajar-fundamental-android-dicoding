@@ -8,7 +8,9 @@
     <string name="location">Jakarta Indonesia</string>
     <string name="tab_1">Followers</string>
     <string name="tab_2">Following</string>
-    <string name="change_language_settings">Change Language Settings</string>
+    <string name="change_language_settings">Change Language</string>
     <string name="favorite">Favorite</string>
     <string name="setting">Setting</string>
+    <string name="no_data">No data at this time</string>
+    <string name="reminder">Reminder</string>
 </resources>

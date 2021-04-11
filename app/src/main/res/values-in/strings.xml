@@ -9,7 +9,9 @@
     <string name="location">Jakarta Indonesia</string>
     <string name="tab_1">Pengikut</string>
     <string name="tab_2">Mengikuti</string>
-    <string name="change_language_settings">Ubah Pengaturan Bahasa</string>
+    <string name="change_language_settings">Ganti Bahasa</string>
     <string name="favorite">Favorit</string>
     <string name="setting">Pengaturan</string>
+    <string name="no_data">Tidak ada data saat ini</string>
+    <string name="reminder">Pengingat</string>
 </resources>

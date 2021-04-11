@@ -112,9 +112,13 @@
 
     <ToggleButton
         android:id="@+id/favBotton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:text="@string/favorite"
+        android:background="@drawable/favorites_toggle"
+        android:backgroundTint="@color/white"
+        android:textOff=""
+        android:textOn=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDetailSum" />
