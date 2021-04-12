@@ -31,7 +31,7 @@
         <activity android:name=".view.FavoriteActivity" />
         <activity
             android:name=".view.SplashScreen"
-            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
+            android:theme="@style/Theme.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

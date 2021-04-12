@@ -54,9 +54,9 @@ class FollowerFollowingFragment : Fragment() {
         val empty: ImageView = view.findViewById(R.id.empty)
 
         if (index == 0) {
-            showFollowers(username.toString(),empty)
+            showFollowers(username.toString())
         } else {
-            showFollowing(username.toString(),empty)
+            showFollowing(username.toString())
         }
 
         if(isEmpty){
@@ -67,7 +67,7 @@ class FollowerFollowingFragment : Fragment() {
     }
 
     @SuppressLint("FragmentLiveDataObserve")
-    private fun showFollowers(username: String,imageView: ImageView) {
+    private fun showFollowers(username: String) {
         getFollowersModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(FollowersViewModel::class.java)
         getFollowersModel.setData(username)
         getFollowersModel.getData().observe(this, { listUsers ->
@@ -79,15 +79,13 @@ class FollowerFollowingFragment : Fragment() {
     }
 
     @SuppressLint("FragmentLiveDataObserve")
-    private fun showFollowing(username: String,imageView: ImageView) {
+    private fun showFollowing(username: String) {
         getFollowingModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(FollowingViewModel::class.java)
         getFollowingModel.setData(username)
         getFollowingModel.getData().observe(this, { listUsers ->
             if (listUsers != null) {
                 adapter.setData(listUsers)
-                imageView.visibility = View.GONE
-            } else {
-                imageView.visibility = View.VISIBLE
+                isEmpty = false
             }
         })
     }
