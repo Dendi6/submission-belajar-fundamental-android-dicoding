@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Dendi Github Users</string>
+    <string name="app_name">Kontak Github</string>
     <string name="name">Nama</string>
     <string name="userName">Nama Pengguna</string>
     <string name="userCompany">Perusahaan</string>

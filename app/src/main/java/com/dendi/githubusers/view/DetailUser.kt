@@ -1,6 +1,7 @@
 package com.dendi.githubusers.view
 
 import android.content.ContentValues
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -86,7 +87,8 @@ class DetailUser : AppCompatActivity() {
     private fun setMode(selectedMode: Int) {
         when (selectedMode) {
             R.id.share -> {
-                Log.d("item","share diklik")
+                val person = intent.getParcelableExtra<User>(EXTRA_DATA) as User
+                share(person)
             }
         }
     }
@@ -152,6 +154,18 @@ class DetailUser : AppCompatActivity() {
 
     private fun deleteDb(user:User){
         userHelper.deleteById(user.userName.toString())
+    }
+    
+    private fun share(user:User){
+        val username = user.userName
+        val url = user.htmlUrl
+        val text = resources.getString(R.string.share,username, url)
+
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.putExtra(Intent.EXTRA_TEXT, text)
+        intent.type = "text/plain"
+
+        startActivity(Intent.createChooser(intent, "Share using .."))
     }
 
     private fun view( user : User){

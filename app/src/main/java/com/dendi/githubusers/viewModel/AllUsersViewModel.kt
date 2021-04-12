@@ -31,6 +31,7 @@ class AllUsersViewModel:ViewModel() {
                         val user = User()
                         user.userName = jsonObject.getString("login")
                         user.photo = jsonObject.getString("avatar_url")
+                        user.htmlUrl = jsonObject.getString("html_url")
                         listItem.add(user)
                     }
                     listUsers.postValue(listItem)

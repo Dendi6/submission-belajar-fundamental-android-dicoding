@@ -39,6 +39,7 @@ class UserViewModel: ViewModel() {
                     user.repository = jsonObject.getInt("public_repos")
                     user.followers = jsonObject.getInt("followers")
                     user.following = jsonObject.getInt("following")
+                    user.htmlUrl = jsonObject.getString("html_url")
 
                     item.add(user)
                     userData.postValue(item)

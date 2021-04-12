@@ -16,4 +16,5 @@
     <string name="message_alarm">Intelligence is the ability to avoid doing work, yet getting the work done</string>
     <string name="set_repeat">Repeating alarm set up</string>
     <string name="cancel_repeat">Repeating alarm canceled</string>
+    <string name="share">Name: %1$s. \n\nyou can see the profile at : \n%2$s</string>
 </resources>
