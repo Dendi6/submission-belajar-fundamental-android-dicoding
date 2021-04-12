@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +18,6 @@ class FollowerFollowingFragment : Fragment() {
     private lateinit var adapter: UsersAdapter
     private lateinit var getFollowersModel: FollowersViewModel
     private lateinit var getFollowingModel: FollowingViewModel
-    private var isEmpty = true
 
     companion object {
         private const val ARG_SECTION_NUMBER = "section_number"
@@ -51,18 +49,10 @@ class FollowerFollowingFragment : Fragment() {
         val index = arguments?.getInt(ARG_SECTION_NUMBER, 0)
         val username = arguments?.getString(USERNAME)
 
-        val empty: ImageView = view.findViewById(R.id.empty)
-
         if (index == 0) {
             showFollowers(username.toString())
         } else {
             showFollowing(username.toString())
-        }
-
-        if(isEmpty){
-            empty.visibility = View.VISIBLE
-        } else {
-            empty.visibility = View.GONE
         }
     }
 
@@ -73,7 +63,6 @@ class FollowerFollowingFragment : Fragment() {
         getFollowersModel.getData().observe(this, { listUsers ->
             if (listUsers != null) {
                 adapter.setData(listUsers)
-                isEmpty = false
             }
         })
     }
@@ -85,7 +74,6 @@ class FollowerFollowingFragment : Fragment() {
         getFollowingModel.getData().observe(this, { listUsers ->
             if (listUsers != null) {
                 adapter.setData(listUsers)
-                isEmpty = false
             }
         })
     }
