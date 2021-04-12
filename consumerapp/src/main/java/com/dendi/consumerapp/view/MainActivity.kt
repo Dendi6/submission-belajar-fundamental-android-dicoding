@@ -1,4 +1,4 @@
-package com.dendi.githubusers.view
+package com.dendi.consumerapp.view
 
 import android.database.ContentObserver
 import androidx.appcompat.app.AppCompatActivity
@@ -7,40 +7,33 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dendi.githubusers.R
-import com.dendi.githubusers.adapter.UsersFavoriteAdapter
-import com.dendi.githubusers.databinding.ActivityFavoriteBinding
-import com.dendi.githubusers.db.DatabaseUser.UserColumns.Companion.CONTENT_URI
-import com.dendi.githubusers.helper.MappingHelper
-import com.dendi.githubusers.model.User
+import com.dendi.consumerapp.R
+import com.dendi.consumerapp.databinding.ActivityMainBinding
+import com.dendi.consumerapp.adapter.UsersFavoriteAdapter
+import com.dendi.consumerapp.db.DatabaseUser.UserColumns.Companion.CONTENT_URI
+import com.dendi.consumerapp.helper.MappingHelper
+import com.dendi.consumerapp.model.User
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class FavoriteActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: UsersFavoriteAdapter
-    private lateinit var binding: ActivityFavoriteBinding
 
     companion object {
         private const val EXTRA_STATE = "EXTRA_STATE"
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityFavoriteBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         supportActionBar?.elevation = 0f
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val title:String = getString(R.string.favorite)
-        setActionBarTitle(title)
+        supportActionBar?.title = "Github Contact"
 
         binding.tvUsers.layoutManager = LinearLayoutManager(this)
         binding.tvUsers.setHasFixedSize(true)
@@ -65,12 +58,6 @@ class FavoriteActivity : AppCompatActivity() {
             if (list != null) {
                 adapter.dataUsers = list
             }
-        }
-    }
-
-    private fun setActionBarTitle(title: String) {
-        if (supportActionBar != null) {
-            this.title = title
         }
     }
 

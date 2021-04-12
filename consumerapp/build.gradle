@@ -9,14 +9,15 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.dendi.githubusers"
+        applicationId "com.dendi.consumerapp"
         minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
-        versionName "3.0"
+        versionName "1.0"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "GITHUB_TOKEN", '"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"')
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -51,7 +52,6 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.preference:preference:1.1.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

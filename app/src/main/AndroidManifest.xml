@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dendi.githubusers">
 
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <permission android:name="com.dendi.githubusers.READ_DATABASE" android:protectionLevel="normal"/>
     <permission android:name="com.dendi.githubusers.WRITE_DATABASE" android:protectionLevel="normal"/>
     <uses-permission android:name="android.permission.INTERNET" />

@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">ConsumerApp</string>
+    <string name="name">Name</string>
+    <string name="userName">User Name</string>
+    <string name="userCompany">Company</string>
+    <string name="user_sum"><b>%1$d</b> followers.<b>%2$d</b> following.<b>%3$d</b> repository</string>
+    <string name="detail">Detail</string>
+    <string name="location">Jakarta Indonesia</string>
+    <string name="tab_1">Followers</string>
+    <string name="tab_2">Following</string>
+    <string name="change_language_settings">Change Language</string>
+    <string name="favorite">Favorite</string>
+    <string name="setting">Setting</string>
+    <string name="no_data">No data at this time</string>
+    <string name="reminder">Reminder</string>
+    <string name="message_alarm">Intelligence is the ability to avoid doing work, yet getting the work done</string>
+    <string name="set_repeat">Repeating alarm set up</string>
+    <string name="cancel_repeat">Repeating alarm canceled</string>
+</resources>
