@@ -13,6 +13,7 @@ object DatabaseUser {
             const val _ID = "_id"
             const val PHOTO = "photo"
             const val USERNAME = "username"
+            const val LINK = "link"
 
             val CONTENT_URI: Uri = Uri.Builder().scheme(SCHEME)
                 .authority(AUTHORITY)

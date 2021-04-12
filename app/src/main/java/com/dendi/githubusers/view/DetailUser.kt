@@ -149,6 +149,7 @@ class DetailUser : AppCompatActivity() {
         val values = ContentValues()
         values.put(DatabaseUser.UserColumns.PHOTO, user.photo)
         values.put(DatabaseUser.UserColumns.USERNAME, user.userName)
+        values.put(DatabaseUser.UserColumns.LINK, user.htmlUrl)
         contentResolver.insert(CONTENT_URI, values)
     }
 

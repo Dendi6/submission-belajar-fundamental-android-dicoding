@@ -24,4 +24,8 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/black</item>
     </style>
+
+    <style name="text.name.detail">
+        <item name="android:textSize">25dp</item>
+    </style>
 </resources>

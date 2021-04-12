@@ -13,5 +13,6 @@ data class User(
     var company: String? = null,
     var repository: Int? = null,
     var followers: Int? = null,
-    var following: Int? = null
+    var following: Int? = null,
+    var htmlUrl: String? = null
 ): Parcelable

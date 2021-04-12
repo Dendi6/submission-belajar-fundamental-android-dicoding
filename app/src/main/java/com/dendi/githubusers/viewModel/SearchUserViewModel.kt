@@ -32,7 +32,7 @@ class SearchUserViewModel: ViewModel() {
                         val user = User()
                         user.userName = dataObject.getString("login")
                         user.photo = dataObject.getString("avatar_url")
-                        user.htmlUrl = jsonObject.getString("html_url")
+                        user.htmlUrl = dataObject.getString("html_url")
                         listItem.add(user)
                     }
 

@@ -12,7 +12,8 @@ internal class DatabaseHelper(context: Context): SQLiteOpenHelper(context, DATAB
         private const val SQL_CREATE_TABLE_NOTE = "CREATE TABLE $TABLE_NAME" +
                 "(${DatabaseUser.UserColumns._ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
                 " ${DatabaseUser.UserColumns.PHOTO} TEXT NOT NULL," +
-                " ${DatabaseUser.UserColumns.USERNAME} TEXT NOT NULL )"
+                " ${DatabaseUser.UserColumns.USERNAME} TEXT NOT NULL," +
+                " ${DatabaseUser.UserColumns.LINK} TEXT NOT NULL )"
     }
 
     override fun onCreate(db: SQLiteDatabase) {

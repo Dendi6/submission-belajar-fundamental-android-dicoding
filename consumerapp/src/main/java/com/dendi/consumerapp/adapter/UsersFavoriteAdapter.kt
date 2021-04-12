@@ -2,7 +2,6 @@ package com.dendi.consumerapp.adapter
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import com.dendi.consumerapp.R
 import com.dendi.consumerapp.databinding.ItemUserListBinding
 import com.dendi.consumerapp.helper.CustomOnItemClickListener
 import com.dendi.consumerapp.model.User
+import com.dendi.consumerapp.view.DetailUser
 
 class UsersFavoriteAdapter(private val activity: Activity) :
     RecyclerView.Adapter<UsersFavoriteAdapter.UserViewHolder>() {
@@ -50,11 +50,10 @@ class UsersFavoriteAdapter(private val activity: Activity) :
                         adapterPosition,
                         object : CustomOnItemClickListener.OnItemClickCallback {
                             override fun onItemClicked(view: View, position: Int) {
-                                Log.d("tag","Item Klik")
-//                                val user = User(users.id, users.photo, users.userName)
-//                                val intent = Intent(activity, DetailUser::class.java)
-//                                intent.putExtra(DetailUser.EXTRA_DATA, user)
-//                                activity.startActivity(intent)
+                                val user = User(users.id, users.photo, users.userName, users.htmlUrl)
+                                val intent = Intent(activity, DetailUser::class.java)
+                                intent.putExtra(DetailUser.EXTRA_DATA, user)
+                                activity.startActivity(intent)
                             }
                         })
                 )
