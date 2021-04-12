@@ -1,4 +1,4 @@
-package com.dendi.githubusers.view.fragment
+package com.dendi.consumerapp.view.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -10,16 +10,16 @@ import android.widget.ImageView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.dendi.githubusers.R
-import com.dendi.githubusers.adapter.UsersAdapter
-import com.dendi.githubusers.viewModel.FollowersViewModel
-import com.dendi.githubusers.viewModel.FollowingViewModel
+import com.dendi.consumerapp.R
+import com.dendi.consumerapp.adapter.UsersAdapter
+import com.dendi.consumerapp.viewModel.FollowersViewModel
+import com.dendi.consumerapp.viewModel.FollowingViewModel
 
 class FollowerFollowingFragment : Fragment() {
     private lateinit var adapter: UsersAdapter
     private lateinit var getFollowersModel: FollowersViewModel
     private lateinit var getFollowingModel: FollowingViewModel
-    private var isEmpty = true
+    private var state = false
 
     companion object {
         private const val ARG_SECTION_NUMBER = "section_number"
@@ -54,12 +54,12 @@ class FollowerFollowingFragment : Fragment() {
         val empty: ImageView = view.findViewById(R.id.empty)
 
         if (index == 0) {
-            showFollowers(username.toString(),empty)
+            showFollowers(username.toString())
         } else {
-            showFollowing(username.toString(),empty)
+            showFollowing(username.toString())
         }
 
-        if(isEmpty){
+        if(state){
             empty.visibility = View.VISIBLE
         } else {
             empty.visibility = View.GONE
@@ -67,27 +67,28 @@ class FollowerFollowingFragment : Fragment() {
     }
 
     @SuppressLint("FragmentLiveDataObserve")
-    private fun showFollowers(username: String,imageView: ImageView) {
+    private fun showFollowers(username: String) {
         getFollowersModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(FollowersViewModel::class.java)
         getFollowersModel.setData(username)
         getFollowersModel.getData().observe(this, { listUsers ->
             if (listUsers != null) {
                 adapter.setData(listUsers)
-                isEmpty = false
+            }
+            else {
+                state = false
             }
         })
     }
 
     @SuppressLint("FragmentLiveDataObserve")
-    private fun showFollowing(username: String,imageView: ImageView) {
+    private fun showFollowing(username: String) {
         getFollowingModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(FollowingViewModel::class.java)
         getFollowingModel.setData(username)
         getFollowingModel.getData().observe(this, { listUsers ->
             if (listUsers != null) {
                 adapter.setData(listUsers)
-                imageView.visibility = View.GONE
             } else {
-                imageView.visibility = View.VISIBLE
+                state = false
             }
         })
     }

@@ -50,7 +50,7 @@ class UsersFavoriteAdapter(private val activity: Activity) :
                         adapterPosition,
                         object : CustomOnItemClickListener.OnItemClickCallback {
                             override fun onItemClicked(view: View, position: Int) {
-                                val user = User(users.id, users.photo, users.userName)
+                                val user = User(users.id, users.photo, users.userName, users.htmlUrl)
                                 val intent = Intent(activity, DetailUser::class.java)
                                 intent.putExtra(DetailUser.EXTRA_DATA, user)
                                 activity.startActivity(intent)

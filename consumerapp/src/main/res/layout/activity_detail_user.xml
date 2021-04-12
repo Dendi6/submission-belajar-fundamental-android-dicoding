@@ -132,8 +132,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvCompany"
-        app:tabTextColor="@color/white"
-        app:tabBackground="@color/purple_500" />
+        app:tabTextColor="@color/purple_500"
+        app:tabBackground="@color/white" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
