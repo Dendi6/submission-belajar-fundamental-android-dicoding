@@ -14,4 +14,7 @@
     <string name="setting">Pengaturan</string>
     <string name="no_data">Tidak ada data saat ini</string>
     <string name="reminder">Pengingat</string>
+    <string name="message_alarm">kecerdasan adalah kemampuan untuk menghindari melakukan pekerjaan, namun menyelesaikan pekerjaan.</string>
+    <string name="set_repeat">Alarm berulang di set</string>
+    <string name="cancel_repeat">Alarm berulang di batalkan</string>
 </resources>

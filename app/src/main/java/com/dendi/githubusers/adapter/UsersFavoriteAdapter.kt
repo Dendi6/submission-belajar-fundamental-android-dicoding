@@ -25,7 +25,8 @@ class UsersFavoriteAdapter(private val activity: Activity) :
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val mView = LayoutInflater.from(parent.context).inflate(R.layout.item_user_list, parent, false)
+        val mView =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_user_list, parent, false)
         return UserViewHolder(mView)
     }
 
@@ -49,10 +50,10 @@ class UsersFavoriteAdapter(private val activity: Activity) :
                         adapterPosition,
                         object : CustomOnItemClickListener.OnItemClickCallback {
                             override fun onItemClicked(view: View, position: Int) {
-                                val user = User(users.id,users.photo,users.userName)
+                                val user = User(users.id, users.photo, users.userName)
                                 val intent = Intent(activity, DetailUser::class.java)
                                 intent.putExtra(DetailUser.EXTRA_DATA, user)
-                                activity.startActivityForResult(intent, DetailUser.REQUEST_UPDATE)
+                                activity.startActivity(intent)
                             }
                         })
                 )

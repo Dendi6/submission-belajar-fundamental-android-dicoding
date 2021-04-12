@@ -1,13 +1,16 @@
 package com.dendi.githubusers.view
 
+import android.database.ContentObserver
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.HandlerThread
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dendi.githubusers.R
 import com.dendi.githubusers.adapter.UsersFavoriteAdapter
 import com.dendi.githubusers.databinding.ActivityFavoriteBinding
-import com.dendi.githubusers.db.UserHelper
+import com.dendi.githubusers.db.DatabaseUser.UserColumns.Companion.CONTENT_URI
 import com.dendi.githubusers.helper.MappingHelper
 import com.dendi.githubusers.model.User
 import com.google.android.material.snackbar.Snackbar
@@ -44,6 +47,17 @@ class FavoriteActivity : AppCompatActivity() {
         adapter = UsersFavoriteAdapter(this)
         binding.tvUsers.adapter = adapter
 
+        val handlerThread = HandlerThread("DataObserver")
+        handlerThread.start()
+        val handler = Handler(handlerThread.looper)
+        val myObserver = object : ContentObserver(handler) {
+            override fun onChange(self: Boolean) {
+                loadNotesAsync()
+            }
+        }
+
+        contentResolver.registerContentObserver(CONTENT_URI, true, myObserver)
+
         if (savedInstanceState == null) {
             loadNotesAsync()
         } else {
@@ -63,14 +77,12 @@ class FavoriteActivity : AppCompatActivity() {
     private fun loadNotesAsync() {
         GlobalScope.launch(Dispatchers.Main) {
             binding.progressBar.visibility = View.VISIBLE
-            val noteHelper = UserHelper.getInstance(applicationContext)
-            noteHelper.open()
             val deferredNotes = async(Dispatchers.IO) {
-                val cursor = noteHelper.queryAll()
+                val cursor = contentResolver?.query(CONTENT_URI, null, null, null, null)
                 MappingHelper.mapCursorToArrayList(cursor)
             }
-            binding.progressBar.visibility = View.INVISIBLE
             val notes = deferredNotes.await()
+            binding.progressBar.visibility = View.INVISIBLE
             if (notes.size > 0) {
                 adapter.dataUsers = notes
                 binding.emptyView.visibility = View.INVISIBLE
@@ -80,7 +92,6 @@ class FavoriteActivity : AppCompatActivity() {
                 val text = getString(R.string.no_data)
                 showSnackbarMessage(text)
             }
-            noteHelper.close()
         }
     }
 

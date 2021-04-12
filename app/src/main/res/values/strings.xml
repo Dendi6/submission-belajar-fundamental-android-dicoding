@@ -13,4 +13,7 @@
     <string name="setting">Setting</string>
     <string name="no_data">No data at this time</string>
     <string name="reminder">Reminder</string>
+    <string name="message_alarm">Intelligence is the ability to avoid doing work, yet getting the work done</string>
+    <string name="set_repeat">Repeating alarm set up</string>
+    <string name="cancel_repeat">Repeating alarm canceled</string>
 </resources>
