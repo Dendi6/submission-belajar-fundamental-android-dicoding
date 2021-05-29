@@ -63,7 +63,7 @@ class DetailUser : AppCompatActivity() {
         showLoading(true)
         showDataUser(person.userName.toString())
         tabLayout(person.userName.toString())
-        
+
         supportActionBar?.elevation = 0f
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -156,7 +156,7 @@ class DetailUser : AppCompatActivity() {
     private fun deleteDb(user:User){
         userHelper.deleteById(user.userName.toString())
     }
-    
+
     private fun share(user:User){
         val username = user.userName
         val url = user.htmlUrl
